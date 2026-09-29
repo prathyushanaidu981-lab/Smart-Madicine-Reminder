@@ -1,4 +1,11 @@
 # config.py
 
-# Water Reminder Time
-WATER_TIME = "16:00"
+WATER_TIMES = [
+    "09:00",
+    "11:00",
+    "13:00",
+    "15:00",
+    "17:00",
+    "19:15",
+    "21:00"
+]
