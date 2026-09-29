@@ -9,6 +9,7 @@ from logger import save_log
 # Alarm Sound
 # -----------------------------------
 def play_alarm():
+
     winsound.Beep(1000, 1000)
 
 
@@ -16,6 +17,7 @@ def play_alarm():
 # Desktop Notification
 # -----------------------------------
 def show_notification(title, message):
+
     notification.notify(
         title=title,
         message=message,
@@ -40,27 +42,45 @@ def drink_water():
     print("================================")
 
     while True:
+
         try:
-            amount = int(input("Enter water consumed (ml): "))
 
-            save_log("Water", f"{amount} ml")
+            amount = int(
+                input("Enter water consumed (ml): ")
+            )
 
-            print(f"\n✅ Water intake saved : {amount} ml")
+            save_log(
+                "Water",
+                f"{amount} ml"
+            )
+
+            print(
+                f"\n✅ Water intake saved : {amount} ml"
+            )
+
             break
 
         except ValueError:
-            print("❌ Please enter a valid number.")
+
+            print(
+                "❌ Please enter a valid number."
+            )
 
 
 # -----------------------------------
 # Medicine Reminder
 # -----------------------------------
-def take_medicine(name, dosage, food, frequency):
+def take_medicine(
+    name,
+    dosage,
+    food,
+    frequency
+):
 
     play_alarm()
 
     show_notification(
-        "Medicine Reminder",
+        "💊 Medicine Reminder",
         f"{name}\n{dosage}"
     )
 
@@ -81,24 +101,42 @@ def take_medicine(name, dosage, food, frequency):
 
     choice = input("Enter Choice : ")
 
+    # -----------------------------------
+    # Medicine Taken
+    # -----------------------------------
     if choice == "1":
 
-        print("✅ Medicine Taken")
+        print("\n✅ Medicine Taken")
 
-        save_log(name, "Taken")
+        save_log(
+            "Medicine",
+            f"{name} - Taken"
+        )
 
+    # -----------------------------------
+    # Snooze
+    # -----------------------------------
     elif choice == "2":
 
-        print("⏰ Snooze feature coming soon.")
+        print("\n⏰ Medicine Snoozed")
 
-        save_log(name, "Snoozed")
+        save_log(
+            "Medicine",
+            f"{name} - Snoozed"
+        )
 
+    # -----------------------------------
+    # Medicine Skipped
+    # -----------------------------------
     elif choice == "3":
 
-        print("❌ Medicine Skipped")
+        print("\n❌ Medicine Skipped")
 
-        save_log(name, "Skipped")
+        save_log(
+            "Medicine",
+            f"{name} - Skipped"
+        )
 
     else:
 
-        print("⚠ Invalid Choice")
+        print("\n⚠ Invalid Choice")

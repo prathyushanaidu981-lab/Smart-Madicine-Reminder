@@ -1,5 +1,3 @@
-# report.py
-
 import csv
 import os
 
@@ -7,38 +5,59 @@ FILE_NAME = "database.csv"
 
 
 def show_report():
+
+    print("\n==============================")
+    print(" SMART MEDICINE BOTTLE REPORT")
+    print("==============================")
+
     if not os.path.exists(FILE_NAME):
-        print("\nNo records found.")
+        print("💧 Total Water Intake : 0 ml")
+        print("💊 Medicine Taken     : 0")
+        print("❌ Medicine Missed    : 0")
+        print("==============================")
         return
 
-    water_total = 0
+    total_water = 0
     medicine_taken = 0
     medicine_missed = 0
 
-    with open(FILE_NAME, "r") as file:
+    with open(FILE_NAME, "r", newline="") as file:
+
         reader = csv.DictReader(file)
 
         for row in reader:
 
-            if row["Event"] == "Water":
+            event = row["Event"].strip()
+            status = row["Status"].strip()
+
+            # Water
+            if event.lower() == "water":
+
                 try:
-                    amount = int(row["Status"].replace(" ml", ""))
-                    water_total += amount
-                except:
+                    amount = int(
+                        status.lower()
+                        .replace("ml", "")
+                        .strip()
+                    )
+
+                    total_water += amount
+
+                except ValueError:
                     pass
 
-            elif row["Event"] == "Medicine":
+            # Medicine
+            elif event.lower() == "medicine":
 
-                if row["Status"] == "Taken":
+                status_lower = status.lower()
+
+                if status_lower.endswith(" - taken"):
                     medicine_taken += 1
 
-                elif row["Status"] == "Missed":
+                elif status_lower.endswith(" - skipped"):
                     medicine_missed += 1
 
-    print("\n==============================")
-    print(" SMART MEDICINE BOTTLE REPORT ")
-    print("==============================")
-    print(f"💧 Total Water Intake : {water_total} ml")
+    print(f"💧 Total Water Intake : {total_water} ml")
     print(f"💊 Medicine Taken     : {medicine_taken}")
     print(f"❌ Medicine Missed    : {medicine_missed}")
+
     print("==============================")
